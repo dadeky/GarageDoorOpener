@@ -132,12 +132,13 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        if(wasBtEnabled == false){
+        if(!wasBtEnabled){
             if (mBluetoothAdapter.isEnabled()) {
                 mBluetoothAdapter.disable();
             }
         }else{
             if(mStreamThread != null){
+                //cancel the thread
                 mStreamThread.cancel();
             }
         }

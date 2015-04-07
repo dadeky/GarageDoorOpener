@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.dvorski.garagedooropener.SettingsActivity"
+    android:id="@+id/activity_settings">
+
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarSpeedUp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:max="255"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textViewSpeedUp"
+        android:layout_below="@+id/seekBarSpeedUp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/seekBarSpeedUp"
+        android:layout_alignEnd="@+id/seekBarSpeedUp" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarSpeedDown"
+        android:layout_below="@+id/textViewSpeedUp"
+        android:layout_marginTop="31dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textViewSpeedUp"
+        android:layout_alignEnd="@+id/textViewSpeedUp"
+        android:max="255"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textViewSpeedDown"
+        android:layout_below="@+id/seekBarSpeedDown"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/seekBarSpeedDown"
+        android:layout_alignEnd="@+id/seekBarSpeedDown" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarMaxCurrentUp"
+        android:layout_below="@+id/textViewSpeedDown"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp"
+        android:layout_alignRight="@+id/textViewSpeedDown"
+        android:layout_alignEnd="@+id/textViewSpeedDown"
+        android:max="1023"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textViewMaxCurrentUp"
+        android:layout_below="@+id/seekBarMaxCurrentUp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/seekBarMaxCurrentUp"
+        android:layout_alignEnd="@+id/seekBarMaxCurrentUp" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarMaxCurrentDown"
+        android:layout_below="@+id/textViewMaxCurrentUp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp"
+        android:layout_alignRight="@+id/textViewMaxCurrentUp"
+        android:layout_alignEnd="@+id/textViewMaxCurrentUp"
+        android:max="1023"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textViewMaxCurrentDown"
+        android:layout_below="@+id/seekBarMaxCurrentDown"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/seekBarMaxCurrentDown"
+        android:layout_alignEnd="@+id/seekBarMaxCurrentDown" />
+
+</RelativeLayout>

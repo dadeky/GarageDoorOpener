@@ -21,7 +21,6 @@ public class BtThread extends Thread {
     private final BluetoothDevice mDevice;
     private static Handler mHandler;
     private static Handler ctHandler;
-    //private static ConnectedThread streamThread = null;
     private boolean sockConnected = false;
 
     public BtThread(BluetoothAdapter adapter, String addr, Handler handler, Handler cHandler) {

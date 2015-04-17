@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Handler;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -18,8 +18,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
     private final static int REQUEST_ENABLE_BT = 1;
-    private final static String HC_05_MAC = "98:D3:31:40:16:E7";
-    //private final static String HC_05_MAC = "00:24:7E:B5:11:F6";
+    //private final static String HC_05_MAC = "98:D3:31:40:16:E7";
+    private final static String HC_05_MAC = "00:24:7E:B5:11:F6";
     private static BluetoothAdapter mBluetoothAdapter = null;
     private static ConnectedThread mStreamThread = null;
     private static BtThread mBtThread = null;
@@ -27,13 +27,15 @@ public class MainActivity extends ActionBarActivity {
     private static Handler ctHandler = null;
     private ProgressDialog connProgressDialog;
     private boolean wasBtEnabled = true;
-    private static TextView textViewCurrent = null;
+    private static final int PROGRESS = 0x1;
+    private ProgressBar mProgress;
+    private int curr2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textViewCurrent = (TextView) findViewById(R.id.textViewCurrent);
+        mProgress = (ProgressBar) findViewById(R.id.progress_bar);
 
         mHandler = new Handler() {
             @Override
@@ -68,11 +70,8 @@ public class MainActivity extends ActionBarActivity {
                     if(reader.has("sensor")){
                         JSONObject sensorObj  = reader.getJSONObject("sensor");
                         String current = sensorObj.getString("current");
-                        String curr2 = current;
-                        if(current.length() < 4){
-                            curr2 = String.format("%4s", current).replace(' ', '0');
-                        }
-                        textViewCurrent.setText(curr2);
+                        curr2 = Integer.parseInt(current);
+                        mProgress.setProgress(curr2);
                     }
                 }catch (JSONException jex){
                     Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();

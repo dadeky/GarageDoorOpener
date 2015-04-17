@@ -18,8 +18,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
     private final static int REQUEST_ENABLE_BT = 1;
-    //private final static String HC_05_MAC = "98:D3:31:40:16:E7";
-    private final static String HC_05_MAC = "00:24:7E:B5:11:F6";
+    private final static String HC_05_MAC = "98:D3:31:40:16:E7";
+    //private final static String HC_05_MAC = "00:24:7E:B5:11:F6";
     private static BluetoothAdapter mBluetoothAdapter = null;
     private static ConnectedThread mStreamThread = null;
     private static BtThread mBtThread = null;

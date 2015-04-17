@@ -86,30 +86,6 @@ public class ConnectedThread extends Thread {
         }
     }
 
-    // convert InputStream to String
-    private static String getStringFromInputStream(InputStream is) {
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-        String line;
-        try {
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return sb.toString();
-    }
-
     /* Call this from the main activity to send data to the remote device */
     public void write(String message) {
         byte[] msgBuffer = message.getBytes();

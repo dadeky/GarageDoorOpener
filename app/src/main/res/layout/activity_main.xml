@@ -45,15 +45,15 @@
         android:text="Zatvori vrata"
         android:onClick="closeDoor" />
 
-    <Button
+    <!-- <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button3"
         android:layout_below="@+id/button3"
         android:layout_marginTop="40dp"
-        android:text="Ponovno se spoji"
-        android:onClick="reconnect" />
+        android:text="Reset graph"
+        android:onClick="resetSeries" /> -->
 
     <!-- <ProgressBar
         android:id="@+id/progress_bar"
@@ -67,12 +67,12 @@
         android:layout_marginLeft="5dp" /> -->
 
     <com.jjoe64.graphview.GraphView
-        android:id="@+id/graph"
         android:layout_width="match_parent"
-        android:layout_below="@+id/button4"
-        android:layout_height="200dip"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/button3"
+        android:layout_height="150dip"
+        android:id="@+id/graph"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="40dp"/>
 
 </RelativeLayout>

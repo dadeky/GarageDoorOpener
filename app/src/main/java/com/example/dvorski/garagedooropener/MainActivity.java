@@ -15,14 +15,12 @@ import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
     private final static int REQUEST_ENABLE_BT = 1;
     private final static String HC_05_MAC = "98:D3:31:40:16:E7";
-    //private final static String HC_05_MAC = "F4:06:69:91:9D:20";
     private static BluetoothAdapter mBluetoothAdapter = null;
     private static ConnectedThread mStreamThread = null;
     private static BtThread mBtThread = null;
@@ -39,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
     private static final int MIN_Y = 500;
     private static final int MAX_Y = 750;
     private static final int MIN_X = 0;
-    private static final int MAX_X = 600;
+    private static final int MAX_X = 400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,9 +161,9 @@ public class MainActivity extends ActionBarActivity {
 
     /** Called when the user clicks the Open button */
     public void openDoor(View view) {
+        resetSeries();
         String message = "{c:ope}";
         if(mStreamThread != null){
-            initiateGraph();
             mStreamThread.write(message);
         }else{
             Toast.makeText(getBaseContext(), "Nema bluetooth konekcije.", Toast.LENGTH_SHORT).show();
@@ -174,9 +172,9 @@ public class MainActivity extends ActionBarActivity {
 
     /** Called when the user clicks the Close button */
     public void closeDoor(View view) {
+        resetSeries();
         String message = "{c:clo}";
         if(mStreamThread != null){
-            initiateGraph();
             mStreamThread.write(message);
         }else{
             Toast.makeText(getBaseContext(), "Nema bluetooth konekcije.", Toast.LENGTH_SHORT).show();
@@ -193,31 +191,28 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    /** Reconnects to the bluetooth device */
-    public void reconnect(View view) {
-        if (null == mStreamThread){
-            enableAndConnect();
-        }
-        else{
-            if (null == mStreamThread.getBtSocket()){
-                enableAndConnect();
-            }
-            else{
-                if (!mStreamThread.getBtSocket().isConnected())
-                {
-                    enableAndConnect();
-                }
-            }
-        }
+    private void resetSeries()
+    {
+        xValue = 1;
+        mSeries.resetData(new DataPoint[] {
+                new DataPoint(MIN_X, MIN_Y)
+        });
     }
 
     private void initiateGraph()
     {
-        graph = null;
-        mSeries = null;
-        xValue = 0;
         graph = (GraphView) findViewById(R.id.graph);
-        mSeries = new LineGraphSeries<>();
+        mSeries = new LineGraphSeries<>(/*new DataPoint[] {
+                new DataPoint(0, 510),
+                new DataPoint(1, 520),
+                new DataPoint(2, 500),
+                new DataPoint(3, 600),
+                new DataPoint(4, 650),
+                new DataPoint(5, 590),
+                new DataPoint(6, 550),
+                new DataPoint(7, 700)
+        }*/);
+        mSeries.setThickness(2);
         graph.addSeries(mSeries);
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(MIN_Y);

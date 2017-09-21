@@ -10,8 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Handler;
-import android.widget.ProgressBar;
+//import android.widget.ProgressBar;
 import android.widget.Toast;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +22,7 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
     private final static int REQUEST_ENABLE_BT = 1;
     private final static String HC_05_MAC = "98:D3:31:40:16:E7";
-    //private final static String HC_05_MAC = "00:24:7E:B5:11:F6";
+    //private final static String HC_05_MAC = "F4:06:69:91:9D:20";
     private static BluetoothAdapter mBluetoothAdapter = null;
     private static ConnectedThread mStreamThread = null;
     private static BtThread mBtThread = null;
@@ -28,70 +31,25 @@ public class MainActivity extends ActionBarActivity {
     private ProgressDialog connProgressDialog;
     private boolean wasBtEnabled = true;
     private static final int PROGRESS = 0x1;
-    private ProgressBar mProgress;
+    //private ProgressBar mProgress;
+    private GraphView graph;
+    private LineGraphSeries mSeries;
     private int curr2 = 0;
+    private int xValue = 0;
+    private static final int MIN_Y = 500;
+    private static final int MAX_Y = 750;
+    private static final int MIN_X = 0;
+    private static final int MAX_X = 600;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mProgress = (ProgressBar) findViewById(R.id.progress_bar);
+        //mProgress = (ProgressBar) findViewById(R.id.progress_bar);
 
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                // get the bundle and extract data by key
-                Bundle b = msg.getData();
-                String text = b.getString("message");
-                if(msg.what == 2){
-                    connProgressDialog = ProgressDialog.show(MainActivity.this,"Molim pričekajte ...", text, true);
-                    connProgressDialog.setCancelable(true);
-                }else if (msg.what == 1){
-                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();
-                }else if (msg.what == 3){
-                    if(connProgressDialog.isShowing()){
-                        connProgressDialog.dismiss();
-                        mStreamThread = mBtThread.getStreamThread();
-                    }
-                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();
-                }
-            }
-        };
+        initiateGraph();
 
-        ctHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                // get the bundle and extract data by key
-                Bundle b = msg.getData();
-                String text = b.getString("message");
-                try{
-                    //{"sensor":{"current":"123"}}
-                    JSONObject reader = new JSONObject(text);
-                    if(reader.has("sensor")){
-                        JSONObject sensorObj  = reader.getJSONObject("sensor");
-                        String current = sensorObj.getString("current");
-                        curr2 = Integer.parseInt(current);
-                        mProgress.setProgress(curr2);
-                    }
-                }catch (JSONException jex){
-                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            // Device does not support Bluetooth
-            Toast.makeText(getBaseContext(), "Vaš uređaj ne podržava bluetooth.", Toast.LENGTH_SHORT).show();
-        }else{
-            if (!mBluetoothAdapter.isEnabled()) {
-                wasBtEnabled = false;
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }else{
-                connectToBluetoothDevice();
-            }
-        }
+        enableAndConnect();
     }
 
     @Override
@@ -131,23 +89,69 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        if(!wasBtEnabled){
-            if (mBluetoothAdapter.isEnabled()) {
-                mBluetoothAdapter.disable();
-            }
-        }else{
-            if(mStreamThread != null){
-                //cancel the thread
-                mStreamThread.cancel();
-            }
-        }
+        mBtThread.cancel();
+        mStreamThread.cancel();
     }
 
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        if(mStreamThread != null){
-            mStreamThread.setMmHandler(ctHandler);
+    /** Enables the bluetooth if not enabled and connects to the device */
+    public void enableAndConnect()
+    {
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                // get the bundle and extract data by key
+                Bundle b = msg.getData();
+                String text = b.getString("message");
+                if(msg.what == 2){
+                    connProgressDialog = ProgressDialog.show(MainActivity.this,"Molim pričekajte ...", text, true);
+                    connProgressDialog.setCancelable(true);
+                }else if (msg.what == 1){
+                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();
+                }else if (msg.what == 3){
+                    if(connProgressDialog.isShowing()){
+                        connProgressDialog.dismiss();
+                        mStreamThread = mBtThread.getStreamThread();
+                    }
+                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        ctHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                // get the bundle and extract data by key
+                Bundle b = msg.getData();
+                String text = b.getString("message");
+                try{
+                    //{"sensor":{"current":"123"}}
+                    JSONObject reader = new JSONObject(text);
+                    if(reader.has("sensor")){
+                        JSONObject sensorObj  = reader.getJSONObject("sensor");
+                        String current = sensorObj.getString("current");
+                        curr2 = Integer.parseInt(current);
+                        //mProgress.setProgress(curr2);
+                        mSeries.appendData(new DataPoint(xValue,curr2), false, MAX_X, false);
+                        xValue += 1;
+                    }
+                }catch (JSONException jex){
+                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            // Device does not support Bluetooth
+            Toast.makeText(getBaseContext(), "Vaš uređaj ne podržava bluetooth.", Toast.LENGTH_SHORT).show();
+        }else{
+            if (!mBluetoothAdapter.isEnabled()) {
+                wasBtEnabled = false;
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }else{
+                connectToBluetoothDevice();
+            }
         }
     }
 
@@ -161,6 +165,7 @@ public class MainActivity extends ActionBarActivity {
     public void openDoor(View view) {
         String message = "{c:ope}";
         if(mStreamThread != null){
+            initiateGraph();
             mStreamThread.write(message);
         }else{
             Toast.makeText(getBaseContext(), "Nema bluetooth konekcije.", Toast.LENGTH_SHORT).show();
@@ -171,6 +176,7 @@ public class MainActivity extends ActionBarActivity {
     public void closeDoor(View view) {
         String message = "{c:clo}";
         if(mStreamThread != null){
+            initiateGraph();
             mStreamThread.write(message);
         }else{
             Toast.makeText(getBaseContext(), "Nema bluetooth konekcije.", Toast.LENGTH_SHORT).show();
@@ -187,8 +193,41 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /** Reconnects to the bluetooth device */
+    public void reconnect(View view) {
+        if (null == mStreamThread){
+            enableAndConnect();
+        }
+        else{
+            if (null == mStreamThread.getBtSocket()){
+                enableAndConnect();
+            }
+            else{
+                if (!mStreamThread.getBtSocket().isConnected())
+                {
+                    enableAndConnect();
+                }
+            }
+        }
+    }
+
+    private void initiateGraph()
+    {
+        graph = null;
+        mSeries = null;
+        xValue = 0;
+        graph = (GraphView) findViewById(R.id.graph);
+        mSeries = new LineGraphSeries<>();
+        graph.addSeries(mSeries);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(MIN_Y);
+        graph.getViewport().setMaxY(MAX_Y);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(MIN_X);
+        graph.getViewport().setMaxX(MAX_X);
+    }
+
     public static ConnectedThread getConThread(){
         return mStreamThread;
     }
-
 }

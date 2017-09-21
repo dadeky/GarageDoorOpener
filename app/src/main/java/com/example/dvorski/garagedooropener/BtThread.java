@@ -109,5 +109,4 @@ public class BtThread extends Thread {
         msg.what = what;
         mHandler.sendMessage(msg);
     }
-
 }

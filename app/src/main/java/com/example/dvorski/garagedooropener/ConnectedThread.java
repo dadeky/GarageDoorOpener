@@ -115,4 +115,9 @@ public class ConnectedThread extends Thread {
         mmHandler = handler;
     }
 
+
+    public BluetoothSocket getBtSocket()
+    {
+        return mmSocket;
+    }
 }

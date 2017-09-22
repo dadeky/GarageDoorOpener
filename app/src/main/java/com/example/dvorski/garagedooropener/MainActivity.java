@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
     private static final int MIN_Y = 500;
     private static final int MAX_Y = 750;
     private static final int MIN_X = 0;
-    private static final int MAX_X = 400;
+    private static final int MAX_X = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,16 +202,7 @@ public class MainActivity extends ActionBarActivity {
     private void initiateGraph()
     {
         graph = (GraphView) findViewById(R.id.graph);
-        mSeries = new LineGraphSeries<>(/*new DataPoint[] {
-                new DataPoint(0, 510),
-                new DataPoint(1, 520),
-                new DataPoint(2, 500),
-                new DataPoint(3, 600),
-                new DataPoint(4, 650),
-                new DataPoint(5, 590),
-                new DataPoint(6, 550),
-                new DataPoint(7, 700)
-        }*/);
+        mSeries = new LineGraphSeries<>();
         mSeries.setThickness(2);
         graph.addSeries(mSeries);
         graph.getViewport().setYAxisBoundsManual(true);

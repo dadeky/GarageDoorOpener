@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
     private static final int MIN_Y = 500;
     private static final int MAX_Y = 750;
     private static final int MIN_X = 0;
-    private static final int MAX_X = 500;
+    private static final int MAX_X = 600;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -21,6 +21,7 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
     private final static int REQUEST_ENABLE_BT = 1;
     private final static String HC_05_MAC = "98:D3:31:40:16:E7";
+    //private final static String HC_05_MAC = "F4:06:69:91:9D:20";
     private static BluetoothAdapter mBluetoothAdapter = null;
     private static ConnectedThread mStreamThread = null;
     private static BtThread mBtThread = null;
@@ -48,6 +49,20 @@ public class MainActivity extends ActionBarActivity {
         initiateGraph();
 
         enableAndConnect();
+    }
+
+    public void checkConn()
+    {
+        if (mStreamThread == null)
+            Toast.makeText(getBaseContext(), "mStreamThread je null", Toast.LENGTH_LONG).show();
+
+        if (mStreamThread.getBtSocket() == null)
+            Toast.makeText(getBaseContext(), "bluetooth socket je null", Toast.LENGTH_LONG).show();
+
+        if (mStreamThread.getMmOutStream() == null)
+            Toast.makeText(getBaseContext(), "mm out stream je null", Toast.LENGTH_LONG).show();
+
+        Toast.makeText(getBaseContext(), "None of the above", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -161,6 +176,7 @@ public class MainActivity extends ActionBarActivity {
 
     /** Called when the user clicks the Open button */
     public void openDoor(View view) {
+        //checkConn();
         resetSeries();
         String message = "{c:ope}";
         if(mStreamThread != null){
@@ -183,6 +199,7 @@ public class MainActivity extends ActionBarActivity {
 
     /** Called when the user clicks the Stop button */
     public void stopDoor(View view){
+        resetSeries();
         String message = "{c:sto}";
         if(mStreamThread != null){
             mStreamThread.write(message);
@@ -191,20 +208,24 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /** Called when the user hits the Reconnect button */
+    public void reconnect(View view)
+    {
+        connectToBluetoothDevice();
+    }
+
     private void resetSeries()
     {
-        xValue = 1;
-        mSeries.resetData(new DataPoint[] {
-                new DataPoint(MIN_X, MIN_Y)
-        });
+        graph.removeAllSeries();
+        mSeries = new LineGraphSeries<>();
+        mSeries.setThickness(2);
+        graph.addSeries(mSeries);
     }
 
     private void initiateGraph()
     {
         graph = (GraphView) findViewById(R.id.graph);
-        mSeries = new LineGraphSeries<>();
-        mSeries.setThickness(2);
-        graph.addSeries(mSeries);
+        resetSeries();
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(MIN_Y);
         graph.getViewport().setMaxY(MAX_Y);

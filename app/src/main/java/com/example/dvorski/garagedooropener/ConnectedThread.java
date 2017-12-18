@@ -120,4 +120,9 @@ public class ConnectedThread extends Thread {
     {
         return mmSocket;
     }
+
+    public OutputStream getMmOutStream()
+    {
+        return mmOutStream;
+    }
 }

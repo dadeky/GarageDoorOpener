@@ -1,5 +1,7 @@
 package com.example.dvorski.garagedooropener;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -217,6 +219,17 @@ public class SettingsActivity extends ActionBarActivity {
             Toast.makeText(getBaseContext(), "Nema bluetooth konekcije.", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void editMacAddress()
+    {
+        String newMacAddress = "mmmm";
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.mac_address), newMacAddress);
+        editor.commit();
     }
 
 }

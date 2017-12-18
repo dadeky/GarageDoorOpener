@@ -42,8 +42,18 @@
         android:layout_alignLeft="@+id/button2"
         android:layout_below="@+id/button2"
         android:layout_marginTop="40dp"
-        android:text="Zatvori vrata"
+        android:text="@string/close_door"
         android:onClick="closeDoor" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button3"
+        android:layout_below="@+id/button3"
+        android:layout_marginTop="40dp"
+        android:text="@string/reconnect"
+        android:onClick="reconnect" />
 
     <!-- <Button
         android:id="@+id/button4"
@@ -68,11 +78,11 @@
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
-        android:layout_below="@+id/button3"
-        android:layout_height="150dip"
+        android:layout_below="@+id/button4"
+        android:layout_height="120dip"
         android:id="@+id/graph"
         android:layout_marginRight="1dp"
         android:layout_marginLeft="1dp"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

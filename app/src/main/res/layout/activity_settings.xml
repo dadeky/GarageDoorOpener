@@ -100,4 +100,11 @@
         android:layout_alignRight="@+id/seekBarMaxCurrentDown"
         android:layout_alignEnd="@+id/seekBarMaxCurrentDown" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/macAddress"
+        android:layout_below="@id/textViewMaxCurrentDown"
+        android:text="@string/mac_address_text"/>
+
 </RelativeLayout>

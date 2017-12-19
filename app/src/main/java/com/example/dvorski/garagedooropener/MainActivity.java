@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Handler;
-//import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -32,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
     private ProgressDialog connProgressDialog;
     private boolean wasBtEnabled = true;
     private static final int PROGRESS = 0x1;
-    //private ProgressBar mProgress;
     private GraphView graph;
     private LineGraphSeries mSeries;
     private int curr2 = 0;
@@ -46,7 +44,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //mProgress = (ProgressBar) findViewById(R.id.progress_bar);
 
         initiateGraph();
 
@@ -59,25 +56,11 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        String macAddress = sharedPref.getString(getString(R.string.mac_address), HC_05_MAC);
+        String macAddress = sharedPref.getString(getString(R.string.mac_address), "");
         if (macAddress.matches("([\\da-fA-F]{2}(?:\\:|$)){6}")){
             return macAddress;
         }
         return HC_05_MAC;
-    }
-
-    public void checkConn()
-    {
-        if (mStreamThread == null)
-            Toast.makeText(getBaseContext(), "mStreamThread je null", Toast.LENGTH_LONG).show();
-
-        if (mStreamThread.getBtSocket() == null)
-            Toast.makeText(getBaseContext(), "bluetooth socket je null", Toast.LENGTH_LONG).show();
-
-        if (mStreamThread.getMmOutStream() == null)
-            Toast.makeText(getBaseContext(), "mm out stream je null", Toast.LENGTH_LONG).show();
-
-        Toast.makeText(getBaseContext(), "None of the above", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -158,7 +141,6 @@ public class MainActivity extends ActionBarActivity {
                         JSONObject sensorObj  = reader.getJSONObject("sensor");
                         String current = sensorObj.getString("current");
                         curr2 = Integer.parseInt(current);
-                        //mProgress.setProgress(curr2);
                         mSeries.appendData(new DataPoint(xValue,curr2), false, MAX_X, false);
                         xValue += 1;
                     }
@@ -191,7 +173,6 @@ public class MainActivity extends ActionBarActivity {
 
     /** Called when the user clicks the Open button */
     public void openDoor(View view) {
-        //checkConn();
         resetSeries();
         String message = "{c:ope}";
         if(mStreamThread != null){

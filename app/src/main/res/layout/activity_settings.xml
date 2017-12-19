@@ -100,11 +100,32 @@
         android:layout_alignRight="@+id/seekBarMaxCurrentDown"
         android:layout_alignEnd="@+id/seekBarMaxCurrentDown" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/macAddress"
-        android:layout_below="@id/textViewMaxCurrentDown"
-        android:text="@string/mac_address_text"/>
+    <LinearLayout
+        android:id="@+id/linearalyout1"
+        android:layout_marginTop="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewMaxCurrentDown"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:maxLength="17"
+            android:id="@+id/macAddress"
+            android:text="@string/mac_address_text"/>
+
+        <Button
+            android:id="@+id/saveMac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saveMacAddres"
+            android:onClick="editMacAddress" />
+
+    </LinearLayout>
 
 </RelativeLayout>

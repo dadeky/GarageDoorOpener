@@ -120,7 +120,10 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" name="com.android.support:support-v4-22.1.1" level="project" />
+    <orderEntry type="library" name="org.jetbrains:annotations:13.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-annotations:22.1.1@jar" level="project" />
+    <orderEntry type="library" name="com.redmadrobot:inputmask-2.3.0" level="project" />
     <orderEntry type="library" name="com.jjoe64:graphview-4.2.1" level="project" />
+    <orderEntry type="library" name="org.jetbrains.kotlin:kotlin-stdlib:1.1.2-3@jar" level="project" />
   </component>
 </module>

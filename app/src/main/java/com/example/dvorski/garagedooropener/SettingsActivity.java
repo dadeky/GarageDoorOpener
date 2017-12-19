@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -197,6 +199,13 @@ public class SettingsActivity extends ActionBarActivity {
         });
         /*************************************************/
 
+
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        EditText macAddr = (EditText) findViewById(R.id.macAddress);
+        macAddr.setText(sharedPref.getString(getString(R.string.mac_address), ""));
+        macAddr.setSelection(macAddr.getText().length());
     }
 
     // A private method to help us initialize our variables.
@@ -221,15 +230,21 @@ public class SettingsActivity extends ActionBarActivity {
 
     }
 
-    public void editMacAddress()
+    public void editMacAddress(View view)
     {
-        String newMacAddress = "mmmm";
-        Context context = this;
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.mac_address), newMacAddress);
-        editor.commit();
+        EditText macAddr = (EditText) findViewById(R.id.macAddress);
+        String newMacAddress = macAddr.getText().toString();
+        if (newMacAddress.matches("([\\da-fA-F]{2}(?:\\:|$)){6}")){
+            Context context = this;
+            SharedPreferences sharedPref = context.getSharedPreferences(
+                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.mac_address), newMacAddress);
+            editor.commit();
+            Toast.makeText(getBaseContext(), "MAC adresa spremljena.", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getBaseContext(), "Unesena vrijednost nije valjana MAC adresa.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

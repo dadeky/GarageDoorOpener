@@ -2,7 +2,9 @@ package com.example.dvorski.garagedooropener;
 
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -49,6 +51,19 @@ public class MainActivity extends ActionBarActivity {
         initiateGraph();
 
         enableAndConnect();
+    }
+
+    public String getMacAddress()
+    {
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        String macAddress = sharedPref.getString(getString(R.string.mac_address), HC_05_MAC);
+        if (macAddress.matches("([\\da-fA-F]{2}(?:\\:|$)){6}")){
+            return macAddress;
+        }
+        return HC_05_MAC;
     }
 
     public void checkConn()
@@ -170,7 +185,7 @@ public class MainActivity extends ActionBarActivity {
 
     /** Connects to bluetooth */
     public void connectToBluetoothDevice(){
-        mBtThread = new BtThread(mBluetoothAdapter,HC_05_MAC,mHandler,ctHandler);
+        mBtThread = new BtThread(mBluetoothAdapter,getMacAddress(),mHandler,ctHandler);
         mBtThread.start();
     }
 
@@ -216,6 +231,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void resetSeries()
     {
+        xValue = 0;
         graph.removeAllSeries();
         mSeries = new LineGraphSeries<>();
         mSeries.setThickness(2);

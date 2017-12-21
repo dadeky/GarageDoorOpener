@@ -33,7 +33,6 @@ public class SettingsActivity extends ActionBarActivity {
     private static ConnectedThread mStreamThr = null;
     private static Handler socketCommHandler = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,7 +199,6 @@ public class SettingsActivity extends ActionBarActivity {
         /*************************************************/
     }
 
-
     private void initializeVariables() {
         seekBarSpeedUp = (SeekBar) findViewById(R.id.seekBarSpeedUp);
         textViewSpeedUp = (TextView) findViewById(R.id.textViewSpeedUp);
@@ -228,11 +226,7 @@ public class SettingsActivity extends ActionBarActivity {
         macAddr.setSelection(macAddr.getText().length());
     }
 
-    /**
-     * @param view
-     */
-    public void editMacAddress(View view)
-    {
+    public void editMacAddress(View view) {
         EditText macAddr = (EditText) findViewById(R.id.macAddress);
         String newMacAddress = macAddr.getText().toString();
         if (newMacAddress.matches("([\\da-fA-F]{2}(?:\\:|$)){6}")){
@@ -247,5 +241,4 @@ public class SettingsActivity extends ActionBarActivity {
             Toast.makeText(getBaseContext(), "Unesena vrijednost nije valjana MAC adresa.", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

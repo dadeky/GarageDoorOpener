@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Handler;
+import android.widget.Button;
 import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -48,6 +50,26 @@ public class MainActivity extends ActionBarActivity {
         initiateGraph();
 
         enableAndConnect();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        checkConnected();
+    }
+
+    private void checkConnected()
+    {
+        Button button = (Button) findViewById(R.id.button4);
+        button.setBackgroundColor(Color.RED);
+        if (null != mStreamThread)
+        {
+            if (mStreamThread.isConnected())
+            {
+                button.setBackgroundColor(Color.LTGRAY);
+            }
+        }
     }
 
     public String getMacAddress()
@@ -169,6 +191,7 @@ public class MainActivity extends ActionBarActivity {
     public void connectToBluetoothDevice(){
         mBtThread = new BtThread(mBluetoothAdapter,getMacAddress(),mHandler,ctHandler);
         mBtThread.start();
+        checkConnected();
     }
 
     /** Called when the user clicks the Open button */

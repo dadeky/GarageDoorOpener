@@ -198,17 +198,9 @@ public class SettingsActivity extends ActionBarActivity {
             }
         });
         /*************************************************/
-
-
-        Context context = this;
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        EditText macAddr = (EditText) findViewById(R.id.macAddress);
-        macAddr.setText(sharedPref.getString(getString(R.string.mac_address), ""));
-        macAddr.setSelection(macAddr.getText().length());
     }
 
-    // A private method to help us initialize our variables.
+
     private void initializeVariables() {
         seekBarSpeedUp = (SeekBar) findViewById(R.id.seekBarSpeedUp);
         textViewSpeedUp = (TextView) findViewById(R.id.textViewSpeedUp);
@@ -228,8 +220,17 @@ public class SettingsActivity extends ActionBarActivity {
             Toast.makeText(getBaseContext(), "Nema bluetooth konekcije.", Toast.LENGTH_SHORT).show();
         }
 
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        EditText macAddr = (EditText) findViewById(R.id.macAddress);
+        macAddr.setText(sharedPref.getString(getString(R.string.mac_address), ""));
+        macAddr.setSelection(macAddr.getText().length());
     }
 
+    /**
+     * @param view
+     */
     public void editMacAddress(View view)
     {
         EditText macAddr = (EditText) findViewById(R.id.macAddress);

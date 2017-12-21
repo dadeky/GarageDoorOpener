@@ -111,6 +111,11 @@ public class ConnectedThread extends Thread {
         mmHandler.sendMessage(msg);
     }
 
+    public boolean isConnected()
+    {
+        return mmSocket.isConnected();
+    }
+
     public void setMmHandler(Handler handler){
         mmHandler = handler;
     }

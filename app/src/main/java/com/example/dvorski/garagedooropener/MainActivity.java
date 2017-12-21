@@ -53,14 +53,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         checkConnected();
     }
 
-    private void checkConnected()
-    {
+    private void checkConnected() {
         Button button = (Button) findViewById(R.id.button4);
         button.setBackgroundColor(Color.RED);
         if (null != mStreamThread)
@@ -72,8 +70,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public String getMacAddress()
-    {
+    public String getMacAddress() {
         Context context = this;
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -111,15 +108,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_ENABLE_BT) {
-            if (resultCode == RESULT_OK) {
-                connectToBluetoothDevice();
-            }
-        }
-    }
-
-    @Override
     protected void onDestroy(){
         super.onDestroy();
         mBtThread.cancel();
@@ -127,8 +115,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /** Enables the bluetooth if not enabled and connects to the device */
-    public void enableAndConnect()
-    {
+    public void enableAndConnect() {
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -228,13 +215,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /** Called when the user hits the Reconnect button */
-    public void reconnect(View view)
-    {
+    public void reconnect(View view) {
         connectToBluetoothDevice();
     }
 
-    private void resetSeries()
-    {
+    private void resetSeries() {
         xValue = 0;
         graph.removeAllSeries();
         mSeries = new LineGraphSeries<>();
@@ -242,8 +227,7 @@ public class MainActivity extends ActionBarActivity {
         graph.addSeries(mSeries);
     }
 
-    private void initiateGraph()
-    {
+    private void initiateGraph() {
         graph = (GraphView) findViewById(R.id.graph);
         resetSeries();
         graph.getViewport().setYAxisBoundsManual(true);

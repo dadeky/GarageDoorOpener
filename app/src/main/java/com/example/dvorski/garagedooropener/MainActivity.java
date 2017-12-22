@@ -58,6 +58,15 @@ public class MainActivity extends ActionBarActivity {
         checkConnected();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == RESULT_OK) {
+                connectToBluetoothDevice();
+            }
+        }
+    }
+
     private void checkConnected() {
         Button button = (Button) findViewById(R.id.button4);
         button.setBackgroundColor(Color.RED);
@@ -134,6 +143,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                     Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();
                 }
+                checkConnected();
             }
         };
 
@@ -178,7 +188,6 @@ public class MainActivity extends ActionBarActivity {
     public void connectToBluetoothDevice(){
         mBtThread = new BtThread(mBluetoothAdapter,getMacAddress(),mHandler,ctHandler);
         mBtThread.start();
-        checkConnected();
     }
 
     /** Called when the user clicks the Open button */

@@ -49,6 +49,8 @@ public class MainActivity extends ActionBarActivity {
 
         initiateGraph();
 
+        createHandlers();
+
         enableAndConnect();
     }
 
@@ -123,8 +125,7 @@ public class MainActivity extends ActionBarActivity {
         mStreamThread.cancel();
     }
 
-    /** Enables the bluetooth if not enabled and connects to the device */
-    public void enableAndConnect() {
+    public void createHandlers() {
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -168,7 +169,10 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         };
+    }
 
+    /** Enables the bluetooth if not enabled and connects to the device */
+    public void enableAndConnect() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             // Device does not support Bluetooth
@@ -225,7 +229,7 @@ public class MainActivity extends ActionBarActivity {
 
     /** Called when the user hits the Reconnect button */
     public void reconnect(View view) {
-        connectToBluetoothDevice();
+        enableAndConnect();
     }
 
     private void resetSeries() {

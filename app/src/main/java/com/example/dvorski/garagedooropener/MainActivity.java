@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.os.Handler;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -70,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void checkConnected() {
-        Button button = (Button) findViewById(R.id.button4);
+        ImageButton button = (ImageButton) findViewById(R.id.button4);
         button.setBackgroundColor(Color.RED);
         if (null != mStreamThread)
         {

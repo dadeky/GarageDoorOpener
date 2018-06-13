@@ -27,15 +27,15 @@
 
     <ImageButton
         android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40pt"
+        android:layout_height="35pt"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:onClick="openDoor"
-        android:src="@drawable/arrow_up"/>
+        android:src="@mipmap/arr_up_foregrounf" />
 
-    <Button
+    <!-- <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +43,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:onClick="stopDoor"
-        android:text="STOP" />
+        android:text="STOP" /> -->
+
+    <ImageButton
+        android:id="@+id/button2"
+        android:layout_width="40pt"
+        android:layout_height="35pt"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:onClick="stopDoor"
+        android:src="@mipmap/stop_nb" />
 
     <!-- <Button
         android:id="@+id/button3"
@@ -57,23 +67,33 @@
 
     <ImageButton
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_width="40pt"
+        android:layout_height="35pt"
         android:layout_below="@+id/button2"
-        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:onClick="closeDoor"
-        android:src="@drawable/down_arrow"/>
+        android:src="@mipmap/arr_down_foreground" />
 
-    <Button
+    <!-- <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:onClick="reconnect"
-        android:text="SPOJI SE" />
+        android:text="SPOJI SE" /> -->
+
+    <ImageButton
+        android:id="@+id/button4"
+        android:layout_width="40pt"
+        android:layout_height="35pt"
+        android:layout_below="@+id/button3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:onClick="reconnect"
+        android:src="@mipmap/reconnect" />
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
